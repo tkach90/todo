@@ -4,7 +4,8 @@ import styled from 'styled-components';
 const BtnNewItem = styled.button`
     display: flex;
     align-self: flex-end;
-    background-color: aqua;        
+    background-color: aqua;   
+    margin: 2rem 0;     
 `;
 
 function NewTodoItemBtn(props) {

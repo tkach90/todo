@@ -17,7 +17,7 @@ function TodoItem(props) {
         color: 'green',
         fontStyle: 'italic',
         textDecoration: 'line-through',
-    }
+    };
 
     return (
         <Item style={props.item.completed ? completeStyle : null}>

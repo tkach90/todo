@@ -3,26 +3,17 @@ import React, {Fragment, PureComponent} from 'react';
 import TodoItem from './TodoItem';
 import TodoData from './TodoData';
 import NewTodoItemBtn from './NewTodoItemBtn';
+import Search from './searchInput';
 
 class TodoContainer extends PureComponent {
-    inputElement = React.createRef();
-
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             todoArr: TodoData,
-            currentItem: {
-                text: '',
-                id: '',
-            }
-
+            text: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
-    }
-
-    componentDidUpdate() {
-        this.props.inputElement.current.focus();
     }
 
     handleChange(id) {
@@ -42,50 +33,55 @@ class TodoContainer extends PureComponent {
     }
 
     handleInput = e => {
-        const itemText = e.target.value;
-        const currentItem = { text: itemText, id: this.handleChange }
-
+        const text = e.target.value;
         this.setState({
-            currentItem,
+            text
         })
-    }
+    };
 
     addItem = e => {
         e.preventDefault();
-        const newItem = this.state.currentItem;
 
-        if (newItem.text !== '') {
-            console.log(newItem);
-            const newTodoData = [...this.state.newTodoData, newItem];
+        if (this.state.text !== '') {
             this.setState({
-                newTodoData: newTodoData,
-                currentItem: {text: '', id: ''},
+                todoArr: [...this.state.todoArr, {
+                    id: (new Date).getTime().toFixed(4),
+                    text: this.state.text,
+                    completed: false
+                }],
+                text: ''
             })
         }
+    };
+
+    updateData(config) {
+        this.setState(config);
     }
 
     render() {
-        const ContainerItems = this.state.todoArr.map(item =>
-            <TodoItem
-                key={item.id}
-                item={item}
-                handleChange={this.handleChange}
-            />
-        );
-
         return (
             <Fragment>
-                <form
-                    onSubmit={this.props.addItem}
-                >
-                    {ContainerItems}
+                <form onSubmit={this.addItem}>
+                    {!!this.state.todoArr &&
+                    this.state.todoArr.map(item =>
+                        <TodoItem
+                            key={item.id}
+                            item={item}
+                            handleChange={this.handleChange}
+                        />
+                    )
+                    }
                     <input
                         placeholder='add me;)!'
-                        ref={this.props.inputElement}
-                        value={this.props.currentItem.text}
-                        onChange={this.props.handleInput}
+                        value={this.state.text}
+                        onChange={this.handleInput}
                     />
                     <NewTodoItemBtn />
+                    <Search
+                        text={this.state.stringSearch}
+                        data={this.state.todoArr}
+                        update={this.updateData.bind(this)}
+                    />
                 </form>
             </Fragment>
         )
