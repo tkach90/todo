@@ -3,17 +3,35 @@ import React, {Fragment, PureComponent} from 'react';
 import TodoItem from './TodoItem';
 import TodoData from './TodoData';
 import NewTodoItemBtn from './NewTodoItemBtn';
-import Search from './searchInput';
+import Search from './SearchInput';
 
 class TodoContainer extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
             todoArr: TodoData,
+            result: TodoData,
             text: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.filterTodo = this.filterTodo.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            todoArr: nextProps.todoArr,
+        })
+    }
+
+    filterTodo(event) {
+        let value = event.target.value;
+        let FilteredData = this.state.todoArr, result = [];
+        result = FilteredData.filter((todoItem) => {
+            return todoItem.text.toLowerCase().search(value) !== -1;
+        });
+
+        this.setState({result});
     }
 
     handleChange(id) {
@@ -45,7 +63,7 @@ class TodoContainer extends PureComponent {
         if (this.state.text !== '') {
             this.setState({
                 todoArr: [...this.state.todoArr, {
-                    id: (new Date).getTime().toFixed(4),
+                    id: (new Date()).getTime().toFixed(4),
                     text: this.state.text,
                     completed: false
                 }],
@@ -54,16 +72,12 @@ class TodoContainer extends PureComponent {
         }
     };
 
-    updateData(config) {
-        this.setState(config);
-    }
-
     render() {
         return (
             <Fragment>
                 <form onSubmit={this.addItem}>
-                    {!!this.state.todoArr &&
-                    this.state.todoArr.map(item =>
+                    {!!this.state.result &&
+                    this.state.result.map(item =>
                         <TodoItem
                             key={item.id}
                             item={item}
@@ -77,11 +91,14 @@ class TodoContainer extends PureComponent {
                         onChange={this.handleInput}
                     />
                     <NewTodoItemBtn />
-                    <Search
-                        text={this.state.stringSearch}
-                        data={this.state.todoArr}
-                        update={this.updateData.bind(this)}
-                    />
+                    <label>
+                        Search
+                        <input
+                            type="text"
+                            placeholder='search the todo item'
+                            onChange={this.filterTodo}
+                        />
+                    </label>
                 </form>
             </Fragment>
         )
