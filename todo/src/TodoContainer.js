@@ -1,9 +1,37 @@
-import React, {Fragment, PureComponent} from 'react';
+import React, { PureComponent } from 'react';
+import styled from 'styled-components';
 
 import TodoItem from './TodoItem';
 import TodoData from './TodoData';
 import NewTodoItemBtn from './NewTodoItemBtn';
-import Search from './SearchInput';
+// import Search from './SearchInput';
+
+const TodoWrapper = styled.div`
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  max-width: 340px;
+  max-height: 380px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 7px 13px rgba(0, 0, 0, 0.1);
+  
+  form {
+    border-bottom: 1px solid #d0d0e1;
+    padding: 25px 20px;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+  }
+`;
 
 class TodoContainer extends PureComponent {
     constructor(props) {
@@ -74,7 +102,7 @@ class TodoContainer extends PureComponent {
 
     render() {
         return (
-            <Fragment>
+            <TodoWrapper>
                 <form onSubmit={this.addItem}>
                     {!!this.state.result &&
                     this.state.result.map(item =>
@@ -99,8 +127,11 @@ class TodoContainer extends PureComponent {
                             onChange={this.filterTodo}
                         />
                     </label>
+                    {/*<Search*/}
+
+                    {/*/>*/}
                 </form>
-            </Fragment>
+            </TodoWrapper>
         )
     }
 }
