@@ -1,18 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const BtnNewItem = styled.button`
-    //display: flex;
-    //align-self: flex-end;
-    //background-color: aqua;   
-    //margin: 2rem 0;     
+const BtnNewItem = styled.button`    
      width: 50px;
      height: 50px;
      border-radius: 50%;
-     background-color: red;
-     position: absolute;
-     right: 10px;
-     top: 65px;
+     background: linear-gradient(162deg, rgba(2,0,36,1) 0%, rgba(2,0,36,1) 0%, rgba(13,121,9,1) 0%, rgba(32,132,29,1) 42%, rgba(255,255,255,1) 100%);
      cursor: pointer;
      transition: box-shadow 0.2s ease, font-size 0.3s ease;
      
@@ -21,7 +14,6 @@ const BtnNewItem = styled.button`
           left: 50%;
           top: 50%;
           font-size: 24px;
-          position: absolute;
           transform: translate(-50%, -50%);
           color: #fff;
         }
@@ -35,12 +27,10 @@ const BtnNewItem = styled.button`
 `;
 
 function NewTodoItemBtn(props) {
-
     return(
         <BtnNewItem
             type='submit'
         >
-            {/*Add new todo item*/}
         </BtnNewItem>
     )
 }

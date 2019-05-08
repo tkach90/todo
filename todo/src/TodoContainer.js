@@ -7,29 +7,53 @@ import NewTodoItemBtn from './NewTodoItemBtn';
 // import Search from './SearchInput';
 
 const TodoWrapper = styled.div`
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  max-width: 340px;
-  max-height: 380px;
-  width: 100%;
-  height: 100%;
-  position: relative;
+  position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, 50%);
-  color: #fff;
+  width: 100%;
+  height: 100%;
+  max-width: 340px;
+  max-height: 380px;
+  color: #000;
   border-radius: 10px;
   box-shadow: 0px 0px 7px 13px rgba(0, 0, 0, 0.1);
+  transform: translate(-50%, -50%);
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   
   form {
-    border-bottom: 1px solid #d0d0e1;
-    padding: 25px 20px;
-    background: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
+      display: flex;
+      flex-direction: column;
+  }
+`;
+
+const Wrapper = styled.div`
+  position: relative;
+  display: flex;
+  
+  input {
+    margin: 0 1rem;
+    padding: 1rem;
+    width: 100%;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+  }
+  
+  button {
+    position: absolute;
+    right: 16px;
+  } 
+`;
+
+const Search = styled.label`
+  display: flex;
+  align-items: center;
+  margin: 1rem;
+  
+  input {
+    width: 100%;
+    padding: 1rem;
+    margin-left: 1rem;
   }
 `;
 
@@ -113,20 +137,22 @@ class TodoContainer extends PureComponent {
                         />
                     )
                     }
-                    <input
-                        placeholder='add me;)!'
-                        value={this.state.text}
-                        onChange={this.handleInput}
-                    />
-                    <NewTodoItemBtn />
-                    <label>
+                    <Wrapper>
+                        <input
+                            placeholder='add me;)!'
+                            value={this.state.text}
+                            onChange={this.handleInput}
+                        />
+                        <NewTodoItemBtn />
+                    </Wrapper>
+                    <Search>
                         Search
                         <input
                             type="text"
                             placeholder='search the todo item'
                             onChange={this.filterTodo}
                         />
-                    </label>
+                    </Search>
                     {/*<Search*/}
 
                     {/*/>*/}

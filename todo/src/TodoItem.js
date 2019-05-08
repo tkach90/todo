@@ -2,22 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Item = styled.label`
-    //display: flex;
-    //align-items: baseline;
-    //margin: 1rem;
-    //padding: 1rem;
-    //background: transparent;
-    //border-radius: 3px;
-    //border: 2px solid palevioletred;
-    //color: palevioletred;
-    background: #fff;
-    height: auto;
-    min-height: 100%;
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+    padding: 1rem;
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(2,0,36,1) 0%, rgba(9,21,121,1) 30%, rgba(255,255,255,1) 100%);
+    color: #fff;
+    
+    input {
+      margin-right: 5px;
+    }
 `;
 
 function TodoItem(props) {
     const completeStyle = {
-        color: 'green',
+        color: '#00dd00',
         fontStyle: 'italic',
         textDecoration: 'line-through',
     };
