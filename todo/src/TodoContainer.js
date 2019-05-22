@@ -63,13 +63,9 @@ class TodoContainer extends PureComponent {
         this.state = {
             todoArr: TodoData,
             text: '',
-            search: ''
+            search: '',
+            completed: false
         };
-
-        // this.handleChange = this.handleChange.bind(this);
-        // this.filterTodo = this.filterTodo.bind(this);
-        // this.handleInput = this.handleInput.bind(this);
-        // this.addItem = this.addItem.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -121,31 +117,23 @@ class TodoContainer extends PureComponent {
         }
     };
 
+    filterDone = () => {
+        let filterComplete = this.state.todoArr;
+
+        filterComplete.filter( el => {
+          return  el.completed === true
+        })
+    };
+
     render() {
         let arr = [].concat(this.state.todoArr);
         if (this.state.search !== '') {
             arr = arr.filter(el => el.text.includes(this.state.search))
         }
-console.log(arr);
+
         return (
             <TodoWrapper>
                 <form onSubmit={this.addItem}>
-                    {!!arr.length &&
-                    arr.map(item =>
-                        <TodoItem
-                            key={item.id}
-                            item={item}
-                            handleChange={this.handleChange}
-                        />
-                    )}
-                    <Wrapper>
-                        <input
-                            placeholder='add me;)!'
-                            value={this.state.text}
-                            onChange={this.handleInput}
-                        />
-                        <NewTodoItemBtn />
-                    </Wrapper>
                     <Search>
                         Search
                         <input
@@ -154,7 +142,27 @@ console.log(arr);
                             onChange={this.filterTodo}
                             value={this.state.search}
                         />
+                        <input
+                            type="checkbox"
+                            onChange={this.filterDone}
+                        />
                     </Search>
+                    <Wrapper>
+                        <input
+                            placeholder='add me;)!'
+                            value={this.state.text}
+                            onChange={this.handleInput}
+                        />
+                        <NewTodoItemBtn />
+                    </Wrapper>
+                    {!!arr.length &&
+                    arr.map(item =>
+                        <TodoItem
+                            key={item.id}
+                            item={item}
+                            handleChange={this.handleChange}
+                        />
+                    )}
                 </form>
             </TodoWrapper>
         )
