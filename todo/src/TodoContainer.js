@@ -68,6 +68,8 @@ class TodoContainer extends PureComponent {
 
         this.handleChange = this.handleChange.bind(this);
         this.filterTodo = this.filterTodo.bind(this);
+        this.addItem = this.addItem.bind(this);
+        this.handleInput = this.handleInput.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -76,15 +78,7 @@ class TodoContainer extends PureComponent {
         })
     }
 
-    filterTodo(event) {
-        let value = event.target.value;
-        let FilteredData = this.state.todoArr, result = [];
-        result = FilteredData.filter((todoItem) => {
-            return todoItem.text.toLowerCase().search(value) !== -1;
-        });
 
-        this.setState({result});
-    }
 
     handleChange(id) {
         this.setState(prevState => {
@@ -102,27 +96,43 @@ class TodoContainer extends PureComponent {
         )
     }
 
-    handleInput = e => {
-        const text = e.target.value;
-        this.setState({
-            text
-        })
-    };
+        addItem(e) {
+            e.preventDefault();
 
-    addItem = e => {
-        e.preventDefault();
-
-        if (this.state.text !== '') {
-            this.setState({
+            let newTodoArray = this.setState({
                 todoArr: [...this.state.todoArr, {
                     id: (new Date()).getTime().toFixed(4),
                     text: this.state.text,
                     completed: false
                 }],
                 text: ''
-            })
-        }
+            });
+
+            if (this.state.text !== '') {
+                return newTodoArray;
+                // console.log(this.state.todoArr);
+            }
+        };
+
+
+
+    handleInput(e) {
+        const text = e.target.value;
+        this.setState({
+            text
+        })
     };
+
+    filterTodo(event) {
+        let value = event.target.value;
+        let FilteredData = this.state.todoArr, result = [];
+        result = FilteredData.filter((todoItem) => {
+            return todoItem.text.toLowerCase().search(value) !== -1;
+        });
+
+        this.setState({result});
+        console.log(this.state.todoArr);
+    }
 
     render() {
         return (
@@ -138,12 +148,14 @@ class TodoContainer extends PureComponent {
                     )
                     }
                     <Wrapper>
+                        {this.state.todoArr.map( () =>
                         <input
+                            key={this.state.todoArr.id}
                             placeholder='add me;)!'
                             value={this.state.text}
                             onChange={this.handleInput}
                         />
-                        <NewTodoItemBtn />
+                        )}                        <NewTodoItemBtn />
                     </Wrapper>
                     <Search>
                         Search
