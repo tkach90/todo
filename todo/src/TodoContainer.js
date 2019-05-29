@@ -64,7 +64,8 @@ class TodoContainer extends PureComponent {
             todoArr: TodoData,
             text: '',
             search: '',
-            completed: false
+            completed: false,
+            filteredItems: [],
         };
     }
 
@@ -117,12 +118,29 @@ class TodoContainer extends PureComponent {
         }
     };
 
-    filterDone = () => {
-        let filterComplete = this.state.todoArr;
+    handlerfilterDone = (event) => {
+        // const target = event.target;
+        // const name = target.name;
+        // const checked = event.target.checked;
+        //
+        // this.setState(prevState => {
+        //     // We create a new object for filters
+        //     const filter = {
+        //         //  We add all existing filters
+        //         //  This adds them with their existing values
+        //         ...prevState.completed,
+        //         // This is like:
+        //         //    filters[name] = checked
+        //         // which just overrides the value of
+        //         //    the prop that has the name of checkbox
+        //         [name]: checked
+        //     };
+        // });
 
-        filterComplete.filter( el => {
-          return  el.completed === true
-        })
+        const filteredItems = prevState.todoArr.filter(item =>
+            item.checked
+        );
+        this.setState({filteredItems: todoArr, key: 'selected'});
     };
 
     render() {
