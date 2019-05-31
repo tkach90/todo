@@ -118,29 +118,12 @@ class TodoContainer extends PureComponent {
         }
     };
 
-    handlerfilterDone = (event) => {
-        // const target = event.target;
-        // const name = target.name;
-        // const checked = event.target.checked;
-        //
-        // this.setState(prevState => {
-        //     // We create a new object for filters
-        //     const filter = {
-        //         //  We add all existing filters
-        //         //  This adds them with their existing values
-        //         ...prevState.completed,
-        //         // This is like:
-        //         //    filters[name] = checked
-        //         // which just overrides the value of
-        //         //    the prop that has the name of checkbox
-        //         [name]: checked
-        //     };
-        // });
+    handlerfilterDone = () => {
 
-        const filteredItems = prevState.todoArr.filter(item =>
-            item.checked
-        );
-        this.setState({filteredItems: todoArr, key: 'selected'});
+        const defaultArr = this.state.todoArr;
+
+        this.setState({todoArr: this.state.todoArr.filter(item => item.completed === false)
+        });
     };
 
     render() {
@@ -162,7 +145,8 @@ class TodoContainer extends PureComponent {
                         />
                         <input
                             type="checkbox"
-                            onChange={this.filterDone}
+                            onChange={this.handlerfilterDone}
+                            value={this.state.completed}
                         />
                     </Search>
                     <Wrapper>
