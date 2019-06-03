@@ -118,18 +118,18 @@ class TodoContainer extends PureComponent {
         }
     };
 
-    handlerfilterDone = () => {
+    handlerFilterDone = () => this.setState({completed: !this.state.completed});
 
-        const defaultArr = this.state.todoArr;
-
-        this.setState({todoArr: this.state.todoArr.filter(item => item.completed === false)
-        });
-    };
-
-    render() {
+    render() {console.log(this.state);
         let arr = [].concat(this.state.todoArr);
         if (this.state.search !== '') {
             arr = arr.filter(el => el.text.includes(this.state.search))
+        }
+
+        if (this.state.completed) {
+            arr = arr.filter(
+                    item => !item.completed
+            );
         }
 
         return (
@@ -145,7 +145,7 @@ class TodoContainer extends PureComponent {
                         />
                         <input
                             type="checkbox"
-                            onChange={this.handlerfilterDone}
+                            onChange={this.handlerFilterDone}
                             value={this.state.completed}
                         />
                     </Search>
