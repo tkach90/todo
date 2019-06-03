@@ -120,15 +120,28 @@ class TodoContainer extends PureComponent {
 
     handlerFilterDone = () => this.setState({completed: !this.state.completed});
 
-    render() {console.log(this.state);
+    render() {
         let arr = [].concat(this.state.todoArr);
-        if (this.state.search !== '') {
-            arr = arr.filter(el => el.text.includes(this.state.search))
-        }
+        // if (this.state.search !== '') {
+        //     arr = arr.filter(el => el.text.includes(this.state.search))
+        // }
+        //
+        // if (this.state.completed) {
+        //     arr = arr.filter(
+        //             item => !item.completed
+        //     );
+        // }
 
-        if (this.state.completed) {
+        if (this.state.search !== '') {
             arr = arr.filter(
-                    item => !item.completed
+                el => el.text.includes(this.state.search)
+            );
+        } else if (this.state.search !== '' && this.state.completed) {
+            arr = arr.filter(
+                el => el.text.includes(this.state.search)
+            );
+            arr = arr.filter(
+                item => !item.completed
             );
         }
 
