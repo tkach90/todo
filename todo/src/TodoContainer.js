@@ -132,7 +132,7 @@ class TodoContainer extends PureComponent {
         //     );
         // }
 
-        if (this.state.search !== '') {
+        if (this.state.search !== '' && !this.state.completed) {
             arr = arr.filter(
                 el => el.text.includes(this.state.search)
             );
@@ -140,6 +140,11 @@ class TodoContainer extends PureComponent {
             arr = arr.filter(
                 el => el.text.includes(this.state.search)
             );
+
+            arr = arr.filter(
+                item => !item.completed
+            );
+        } else if (this.state.completed) {
             arr = arr.filter(
                 item => !item.completed
             );
