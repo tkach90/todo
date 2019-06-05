@@ -29,6 +29,7 @@
     ]
   },
   "devDependencies": {
+    "react-custom-scrollbars": "^4.2.1",
     "styled-components": "^4.2.0"
   }
 }

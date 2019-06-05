@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import TodoItem from './TodoItem';
 import TodoData from './TodoData';
@@ -18,8 +19,8 @@ const TodoWrapper = styled.div`
   border-radius: 10px;
   box-shadow: 0px 0px 7px 13px rgba(0, 0, 0, 0.1);
   transform: translate(-50%, -50%);
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
+  //overflow-y: auto;
+  //-webkit-overflow-scrolling: touch;
   
   form {
       display: flex;
@@ -66,6 +67,7 @@ class TodoContainer extends PureComponent {
             search: '',
             completed: false,
             filteredItems: [],
+            top: 0
         };
     }
 
@@ -120,17 +122,42 @@ class TodoContainer extends PureComponent {
 
     handlerFilterDone = () => this.setState({completed: !this.state.completed});
 
+    handleUpdate = (values) => {
+        const { top } = values;
+        this.setState({ top });
+    }
+
+    renderView = ({ style, ...props }) => {
+        const viewStyle = {
+            // padding: 15,
+        };
+        return (
+            <div
+                className="box"
+                style={{ ...style, ...viewStyle }}
+                {...props}/>
+        );
+    }
+
+    renderThumb = ({ style, ...props }) => {
+        const thumbStyle = {
+            backgroundColor: `#FFF`,
+            backgroundImage: `-webkit-linear-gradient(90deg,
+            rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 1) 25%,
+            transparent 100%,
+            rgba(0, 0, 0, 1) 75%,
+            transparent)`,
+        };
+        return (
+            <div
+                style={{ ...style, ...thumbStyle }}
+                {...props}/>
+        );
+    }
+
     render() {
         let arr = [].concat(this.state.todoArr);
-        // if (this.state.search !== '') {
-        //     arr = arr.filter(el => el.text.includes(this.state.search))
-        // }
-        //
-        // if (this.state.completed) {
-        //     arr = arr.filter(
-        //             item => !item.completed
-        //     );
-        // }
 
         if (this.state.search !== '' && !this.state.completed) {
             arr = arr.filter(
@@ -151,39 +178,48 @@ class TodoContainer extends PureComponent {
         }
 
         return (
+
             <TodoWrapper>
-                <form onSubmit={this.addItem}>
-                    <Search>
-                        Search
-                        <input
-                            type="text"
-                            placeholder='search the todo item'
-                            onChange={this.filterTodo}
-                            value={this.state.search}
-                        />
-                        <input
-                            type="checkbox"
-                            onChange={this.handlerFilterDone}
-                            value={this.state.completed}
-                        />
-                    </Search>
-                    <Wrapper>
-                        <input
-                            placeholder='add me;)!'
-                            value={this.state.text}
-                            onChange={this.handleInput}
-                        />
-                        <NewTodoItemBtn />
-                    </Wrapper>
-                    {!!arr.length &&
-                    arr.map(item =>
-                        <TodoItem
-                            key={item.id}
-                            item={item}
-                            handleChange={this.handleChange}
-                        />
-                    )}
-                </form>
+                <Scrollbars
+                    style={{ height: 380 }}
+                    renderView={this.renderView}
+                    renderThumbVertical={this.renderThumb}
+                    onUpdate={this.handleUpdate}
+                    {...this.props}
+                >
+                    <form onSubmit={this.addItem}>
+                        <Search>
+                            Search
+                            <input
+                                type="text"
+                                placeholder='search the todo item'
+                                onChange={this.filterTodo}
+                                value={this.state.search}
+                            />
+                            <input
+                                type="checkbox"
+                                onChange={this.handlerFilterDone}
+                                value={this.state.completed}
+                            />
+                        </Search>
+                        <Wrapper>
+                            <input
+                                placeholder='add me;)!'
+                                value={this.state.text}
+                                onChange={this.handleInput}
+                            />
+                            <NewTodoItemBtn />
+                        </Wrapper>
+                        {!!arr.length &&
+                        arr.map(item =>
+                            <TodoItem
+                                key={item.id}
+                                item={item}
+                                handleChange={this.handleChange}
+                            />
+                        )}
+                    </form>
+                </Scrollbars>
             </TodoWrapper>
         )
     }
