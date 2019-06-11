@@ -19,6 +19,9 @@ const Wrapper = styled.div`
     margin: 0 1rem;
     padding: 1rem;
     width: 100%;
+    color: palevioletred;
+    background: papayawhip;
+    border: none;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
   }
@@ -33,11 +36,15 @@ const Search = styled.label`
   display: flex;
   align-items: center;
   margin: 1rem;
+  color: #091579;
   
   input {
-    width: 100%;
-    padding: 1rem;
-    margin-left: 1rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    color: palevioletred;
+    background: papayawhip;
+    border: none;
+    border-radius: 10px;
   }
 `;
 
@@ -52,12 +59,6 @@ class TodoFunctionalForm extends PureComponent {
             filteredItems: [],
             top: 0
         };
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            todoArr: nextProps.todoArr,
-        })
     }
 
     filterTodo = (event) => {
@@ -138,12 +139,10 @@ class TodoFunctionalForm extends PureComponent {
     renderThumb = ({ style, ...props }) => {
         const thumbStyle = {
             backgroundColor: `#FFF`,
-            backgroundImage: `-webkit-linear-gradient(90deg,
-            rgba(0, 0, 0, 1) 0%,
-            rgba(0, 0, 0, 1) 25%,
-            transparent 100%,
-            rgba(0, 0, 0, 1) 75%,
-            transparent)`,
+            backgroundImage: `linear-gradient(360deg, rgba(2,0,36,1) 0%, 
+            rgba(2,0,36,1) 0%, 
+            rgba(9,21,121,1) 50%, 
+            rgba(255,255,255,1) 100%)`,
         };
         return (
             <div
@@ -192,6 +191,9 @@ class TodoFunctionalForm extends PureComponent {
                                 onChange={this.filterTodo}
                                 value={this.state.search}
                             />
+                        </Search>
+                        <Search>
+                            Undone items
                             <input
                                 type="checkbox"
                                 onChange={this.handlerFilterDone}

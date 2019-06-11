@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 
-
-import TodoData from './TodoData';
 import TodoFunctionalForm from './TodoFunctionalForm';
 
 const TodoWrapper = styled.div`
