@@ -1,16 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Checkbox from './Checkbox'
+
 const Item = styled.label`
     display: flex;
     align-items: center;
     margin: 1rem;
     padding: 1rem;
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(2,0,36,1) 0%, rgba(9,21,121,1) 30%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(
+        90deg, rgba(2,0,36,1) 0%, 
+        rgba(2,0,36,1) 0%, 
+        rgba(9,21,121,1) 30%, 
+        rgba(255,255,255,1) 100%
+    );
     color: #fff;
+    transition: color .3s ease-in-out;
     
-    input {
-      margin-right: 5px;
+    &:hover {
+      color: palevioletred;
+      transform: scale(1.1);
+      transition: .4s linear;
+    }
+    
+    div {
+      margin-right: 8px;
     }
 `;
 
@@ -23,7 +37,7 @@ function TodoItem(props) {
 
     return (
         <Item style={props.item.completed ? completeStyle : null}>
-            <input
+            <Checkbox
                 type="checkbox"
                 checked={props.item.completed}
                 onChange={() => props.handleChange(props.item.id)}

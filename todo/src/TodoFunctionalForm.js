@@ -24,6 +24,12 @@ const Wrapper = styled.div`
     border: none;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    
+    &:hover {
+      box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.8);
+    }
   }
   
   button {
@@ -45,6 +51,12 @@ const Search = styled.label`
     background: papayawhip;
     border: none;
     border-radius: 10px;
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    
+    &:hover {
+      box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.8);
+    }
   }
 `;
 
@@ -171,6 +183,8 @@ class TodoFunctionalForm extends PureComponent {
             arr = arr.filter(
                 item => !item.completed
             );
+        } else if (arr.length === 0) {
+            return <span>No Results Found</span>
         }
 
         return (
