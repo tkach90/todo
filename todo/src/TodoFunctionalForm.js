@@ -5,6 +5,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import TodoData from "./TodoData";
 import TodoItem from "./TodoItem";
 import NewTodoItemBtn from "./NewTodoItemBtn";
+import Checkbox from './Checkbox'
 
 const TodoForm = styled.form`
   display: flex;
@@ -57,6 +58,22 @@ const Search = styled.label`
     &:hover {
       box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.8);
     }
+  }
+  
+  .undone-checkbox {
+    margin-left: 1rem;
+  }
+`;
+
+const WrapItems = styled.div`
+  display: flex;
+  flex-direction: column;
+  
+  .noresult {
+    align-self: center;
+    margin-top: 3rem;
+    color: papayawhip;
+    font-size: 2rem;
   }
 `;
 
@@ -167,6 +184,14 @@ class TodoFunctionalForm extends PureComponent {
     render() {
         let arr = [].concat(this.state.todoArr);
 
+        let arrMap =  arr.map(item =>
+            <TodoItem
+                key={item.id}
+                item={item}
+                handleChange={this.handleChange}
+            />
+        );
+
         if (this.state.search !== '' && !this.state.completed) {
             arr = arr.filter(
                 el => el.text.includes(this.state.search)
@@ -183,8 +208,6 @@ class TodoFunctionalForm extends PureComponent {
             arr = arr.filter(
                 item => !item.completed
             );
-        } else if (arr.length === 0) {
-            return <span>No Results Found</span>
         }
 
         return (
@@ -206,12 +229,14 @@ class TodoFunctionalForm extends PureComponent {
                                 value={this.state.search}
                             />
                         </Search>
-                        <Search>
+                        <Search >
                             Undone items
-                            <input
+                            <Checkbox
+                                className='undone-checkbox'
                                 type="checkbox"
                                 onChange={this.handlerFilterDone}
-                                value={this.state.completed}
+                                // value={this.state.completed}
+                                checked={this.state.completed}
                             />
                         </Search>
                         <Wrapper>
@@ -222,14 +247,10 @@ class TodoFunctionalForm extends PureComponent {
                             />
                             <NewTodoItemBtn />
                         </Wrapper>
-                        {!!arr.length &&
-                        arr.map(item =>
-                            <TodoItem
-                                key={item.id}
-                                item={item}
-                                handleChange={this.handleChange}
-                            />
-                        )}
+                        <WrapItems>
+                            {!!arr.length && arrMap}
+                            {arr.length ? arrMap : <div className='noresult'>No results</div>}
+                        </WrapItems>
                     </TodoForm>
                 </Scrollbars>
             </>

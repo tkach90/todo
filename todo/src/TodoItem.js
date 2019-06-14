@@ -21,6 +21,7 @@ const Item = styled.label`
       color: palevioletred;
       transform: scale(1.1);
       transition: .4s linear;
+      cursor: pointer;
     }
     
     div {
