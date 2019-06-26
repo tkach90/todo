@@ -26,7 +26,7 @@ const BtnNewItem = styled.button`
         }
 `;
 
-function NewTodoItemBtn(props) {
+function NewTodoItemBtn() {
     return(
         <BtnNewItem
             type='submit'

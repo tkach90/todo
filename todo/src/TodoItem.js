@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Checkbox from './Checkbox'
-
 const Item = styled.label`
     display: flex;
     align-items: center;
@@ -24,8 +22,8 @@ const Item = styled.label`
       cursor: pointer;
     }
     
-    div {
-      margin-right: 8px;
+    input {
+      margin: 8px 8px 4px 8px;
     }
 `;
 
@@ -38,7 +36,7 @@ function TodoItem(props) {
 
     return (
         <Item style={props.item.completed ? completeStyle : null}>
-            <Checkbox
+            <input
                 type="checkbox"
                 checked={props.item.completed}
                 onChange={() => props.handleChange(props.item.id)}

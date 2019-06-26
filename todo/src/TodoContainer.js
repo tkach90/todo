@@ -15,8 +15,6 @@ const TodoWrapper = styled.div`
   border-radius: 10px;
   box-shadow: 0px 0px 7px 13px rgba(0, 0, 0, 0.1);
   transform: translate(-50%, -50%);
-  //overflow-y: auto;
-  //-webkit-overflow-scrolling: touch;
 `;
 
 class TodoContainer extends PureComponent {
